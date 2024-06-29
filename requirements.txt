@@ -1,0 +1,4 @@
+stable-baselines3==2.3.2
+tensorboard
+gymnasium==0.29.1
+airsim
