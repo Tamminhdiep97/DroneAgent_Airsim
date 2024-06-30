@@ -12,7 +12,7 @@ class Random(object):
     def random_position(self):
         x = random.randrange(-10, 10)
         y = random.randrange(-10, 10)
-        z = random.randrange(-40, 5)
+        z = random.randrange(-40, -20)
         self.position = np.array([x, y, z])
         return self.position
 

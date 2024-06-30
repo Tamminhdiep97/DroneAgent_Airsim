@@ -31,7 +31,7 @@ class AirSimDroneEnv(AirSimEnv):
         self._setup_flight()
 
         self.image_request = airsim.ImageRequest(
-            3, airsim.ImageType.DepthPerspective, True, False
+            0, airsim.ImageType.DepthPerspective, True, False
         )
         # self.pts = np.array([50.5974, 5.0786, -4.32256]),
 
@@ -52,7 +52,7 @@ class AirSimDroneEnv(AirSimEnv):
         self.drone.moveToPositionAsync(
             float(self.pts[0]),
             float(self.pts[1]),
-            float(self.pts[2]), 15
+            float(self.pts[2]), 10
         ).join()
         self.drone.moveByVelocityAsync(1, -0.67, -0.8, 5).join()
 
@@ -63,10 +63,14 @@ class AirSimDroneEnv(AirSimEnv):
 
         from PIL import Image
 
-        image = Image.fromarray(img2d)
-        im_final = np.array(image.resize((84, 84)).convert("L"))
+        try:
+            image = Image.fromarray(img2d)
+        except Exception as e:
+            logger.error(str(e))
+            logger.info(img2d.shape)
+        im_final = np.array(image.resize((128, 128)).convert("L"))
 
-        return im_final.reshape([84, 84, 1])
+        return im_final.reshape([128, 128, 1])
 
     def _get_obs(self):
         responses = self.drone.simGetImages([self.image_request])
