@@ -3,7 +3,7 @@ import gymnasium as gym
 import airgym
 import time
 
-from stable_baselines3 import DQN
+from stable_baselines3 import DQN, HerReplayBuffer
 from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.vec_env import DummyVecEnv, VecTransposeImage
 from stable_baselines3.common.evaluation import evaluate_policy
@@ -30,13 +30,13 @@ model = DQN(
     # "CnnPolicy",
     'MultiInputPolicy',
     env,
-    learning_rate=0.00025,
-    verbose=1,
+    learning_rate=0.0001,
+    verbose=2,
     batch_size=32,
-    train_freq=2,
-    target_update_interval=10,
-    learning_starts=50,
-    buffer_size=5000,
+    train_freq=1,
+    target_update_interval=2,
+    learning_starts=40,
+    buffer_size=1000,
     max_grad_norm=10,
     exploration_fraction=0.1,
     exploration_final_eps=0.01,
@@ -61,8 +61,10 @@ kwargs["callback"] = callbacks
 
 # Train for a certain number of timesteps
 model.learn(
-    total_timesteps=10000,
+    total_timesteps=15000,
     tb_log_name="dqn_airsim_drone_run_" + str(time.time()),
+    log_interval=1,
+    progress_bar=True,
     **kwargs
 )
 

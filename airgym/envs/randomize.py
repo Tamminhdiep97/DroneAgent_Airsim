@@ -12,13 +12,13 @@ class Random(object):
     def random_position(self):
         x = random.randrange(-10, 10)
         y = random.randrange(-10, 10)
-        z = random.randrange(-40, -20)
+        z = random.randrange(-20, -10)
         self.position = np.array([x, y, z])
         return self.position
 
     def random_destination(self, position):
         distance = 10000
-        while distance < 30 or distance > 80:
+        while distance < 40 or distance > 90:
             x = random.randrange(
                 position[0]-40, position[0]+40
             )
@@ -26,9 +26,7 @@ class Random(object):
                 position[1]-40, position[1]+40
             )
             z = random.randrange(
-                position[2]-10, position[2]+30)
+                position[2]-3, position[2]+3)
             self.destination = np.array([x, y, z])
             distance = np.linalg.norm((position - self.destination))
-            print(distance)
-            print(self.destination)
         return self.destination

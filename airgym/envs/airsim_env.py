@@ -14,10 +14,10 @@ class AirSimEnv(gym.Env):
             {
                 'image': spaces.Box(0, 255, shape=image_shape, dtype=np.uint8),
                 'destination': spaces.Box(
-                    -1000, 1000, shape=(1, 3), dtype=np.float32
+                    -1000, 1000, shape=(3,), dtype=np.float32
                 ),
                 'position': spaces.Box(
-                    -1000, 1000, shape=(1, 3), dtype=np.float32
+                    -1000, 1000, shape=(3,), dtype=np.float32
                 )
             }
         )
